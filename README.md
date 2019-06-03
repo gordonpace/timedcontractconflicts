@@ -1,7 +1,7 @@
-#TheCon: THEmulus CONflict Discovery
+# TheCon: THEmulus CONflict Discovery
 A tool to discover conflicts in the timed deontic contract calculus Themulus [1]. The tool embeds Themulus in Haskell to be able to write timed contracts and analyse them for conflicts.
 
-**Themulus-in-Haskell Syntax**
+## Themulus-in-Haskell Syntax
 
 *Support types*
 Parties can be created using the 'party' function and a string describing it. Similarly actions using the 'action' function:
