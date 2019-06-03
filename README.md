@@ -1,5 +1,4 @@
-# timedcontractconflicts
-TheCon: THEmulus CONflict Discovery
+#TheCon: THEmulus CONflict Discovery
 A tool to discover conflicts in the timed deontic contract calculus Themulus [1]. The tool embeds Themulus in Haskell to be able to write timed contracts and analyse them for conflicts.
 
 **Themulus-in-Haskell Syntax**
@@ -11,50 +10,76 @@ party :: String -> Party
 action :: String -> Action
 ```
 Time deadlines can be either any floating point number, or infinite:
-
+```
 time :: Float -> Time
 inf :: Time
-
+```
 *Contract syntax:*
 
 Obligations
- oo :: Party -> Action -> Time -> Contract
+```
+oo :: Party -> Action -> Time -> Contract
+```
 Prohibitions
- ff :: Party -> Action -> Time -> Contract
+```
+ff :: Party -> Action -> Time -> Contract
+```
 Permissions
- pp :: Party -> Action -> Time -> Contract
+```
+pp :: Party -> Action -> Time -> Contract
+```
 Wait
- wait :: Time -> Contract
+```
+wait :: Time -> Contract
+```
 Conditional
- cond :: Party -> Action -> Time -> (Contract, Contract) -> Contract
+```
+cond :: Party -> Action -> Time -> (Contract, Contract) -> Contract
+```
 Sequential composition 
- (>->) :: Contract -> Contract -> Contract
+```
+(>->) :: Contract -> Contract -> Contract
+```
 Reparation 
- (|>) :: Contract -> Contract -> Contract
+```
+(|>) :: Contract -> Contract -> Contract
+```
 Conjunction
- (&&&) :: Contract -> Contract -> Contract
+```
+(&&&) :: Contract -> Contract -> Contract
+```
 Disjunction
- (|||) :: Contract -> Contract -> Contract
+```
+(|||) :: Contract -> Contract -> Contract
+```
 Recursion
-  rec :: String -> Contract
+```
+rec :: String -> Contract
+```
 Recursion variable
-  var :: String -> Contract
-
+```
+var :: String -> Contract
+```
 
 *Helper functions:*
 
 Produces a LaTeX version of the formula:
- toLaTeX :: Contract -> String
+```
+toLaTeX :: Contract -> String
+```
 
 Check a contract for conflicts:
+```
 hasConflict :: Contract -> Bool
 showShortestConflicts :: Contract -> String
 showConflicts :: Contract -> String
 toLaTeXShortestConflicts :: Contract -> String
 toLaTeXAllConflicts :: Contract -> String
-
+```
 Visualisation of the automaton produced by full-transitions (see paper)  and conflicts
+```
 constructAutomaton :: Contract -> ContractAutomaton
 conflictsToDot :: ContractAutomaton -> String
+```
 (The latter produces a dot file which can be visualised using graphviz or similar tool)
 
