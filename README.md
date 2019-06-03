@@ -6,10 +6,10 @@ A tool to discover conflicts in the timed deontic contract calculus Themulus [1]
 
 *Support types*
 Parties can be created using the 'party' function and a string describing it. Similarly actions using the 'action' function:
-
+```
 party :: String -> Party
 action :: String -> Action
-
+```
 Time deadlines can be either any floating point number, or infinite:
 
 time :: Float -> Time
