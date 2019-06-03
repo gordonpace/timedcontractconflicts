@@ -6,7 +6,7 @@ module Logic (
         action,
 
     Time (..),
-        inf,
+        time, inf,
 
     Modality (..),
 
@@ -50,7 +50,7 @@ instance LaTeX Action where
     toLaTeX a = "\\mathtt{"++fromAction a++"}"
 
 -- Time
-data Time = Infinity | Finite Integer deriving Eq
+data Time = Infinity | Finite Double deriving Eq
 
 instance Show Time where
     show (Finite n) = show n
@@ -77,7 +77,7 @@ instance Num Time where
 
     negate (Finite n) = Finite (negate n)
 
-    fromInteger = Finite
+    fromInteger = Finite . fromInteger
 
 instance Ord Time where
     compare (Finite n) (Finite m) = compare n m
@@ -85,7 +85,15 @@ instance Ord Time where
     compare Infinity _ = GT
     compare _ Infinity = LT
 
+instance Fractional Time where
+    fromRational = Finite . fromRational
+
+    Finite _ / Infinity = Finite 0
+    Infinity / Finite _ = Infinity
+    Finite x / Finite y = Finite (x/y)
+
 inf = Infinity
+time = fromRational
 
 -- Modalities
 data Modality = P | F | O deriving (Eq, Ord, Show)

@@ -9,9 +9,9 @@ Parties can be created using the 'party' function and a string describing it. Si
 party :: String -> Party
 action :: String -> Action
 ```
-Time deadlines can be either any floating point number, or infinite:
+Time deadlines can be either any double precision floating point number (number constants automatically converted), or infinite:
 ```
-time :: Float -> Time
+time :: Double -> Time
 inf :: Time
 ```
 *Contract syntax:*
