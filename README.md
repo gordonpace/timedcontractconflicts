@@ -84,7 +84,7 @@ conflictsToDot :: ContractAutomaton -> String
 ```
 The latter produces a dot file which can be visualised using graphviz or similar tool.
 
-##Example ISP end-user agreement##
+## Example ISP end-user agreement
 ```
 isp = party "ISP"
 user = party "user"
