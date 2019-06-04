@@ -1,5 +1,5 @@
 module ContractStateSpace (
-    ContractAutomaton (..), Label (..), show',
+    ContractAutomaton (..), Label (..),
     constructAutomaton, automatonToDot
 ) where
 
@@ -31,23 +31,23 @@ data ContractAutomaton =
 instance Show ContractAutomaton where
     show automaton =
         unlines $
-            "Intial state: ":
-            ("   "++show (head qs)):
-            "Transitions:":
-            [ concat ["   ",show (qs !! q_index)," ",show l," ",show (qs !! q_index')] 
-            | (q_index, l, q_index') <- transitions automaton 
-            ]
-        where
-            qs = states automaton
-            ts = transitions automaton
-
-show' automaton =
-    unlines $
         "States:":
         [ concat ["   ",show n,": ",show c] | (n,c) <- zip [0..] (states automaton) ] ++
         "Intial state: 0":
         "Transitions:":
         [ concat ["   ",show q," ",show l," ",show q'] | (q, l, q') <- transitions automaton ]
+
+        -- unlines $
+        --     "Intial state: ":
+        --     ("   "++show (head qs)):
+        --     "Transitions:":
+        --     [ concat ["   ",show (qs !! q_index)," ",show l," ",show (qs !! q_index')] 
+        --     | (q_index, l, q_index') <- transitions automaton 
+        --     ]
+        -- where
+        --     qs = states automaton
+        --     ts = transitions automaton
+
 
 automatonToDot automaton =
     unlines $
