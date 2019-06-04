@@ -4,12 +4,12 @@ A tool to discover conflicts in the timed deontic contract calculus Themulus [1]
 ## Themulus-in-Haskell Syntax
 
 *Support types*
-Parties can be created using the 'party' function and a string describing it. Similarly actions using the 'action' function:
+Parties can be created using the `party` function and a string describing it. Similarly actions using the `action` function:
 ```
 party :: String -> Party
 action :: String -> Action
 ```
-Time deadlines can be either any double precision floating point number (number constants automatically converted), or infinite:
+Time deadlines can be defined using `time` on any `Double` value (number constants do not need the use of `time` and are automatically converted), or `inf` for an infinite deadline:
 ```
 time :: Double -> Time
 inf :: Time
@@ -63,10 +63,11 @@ var :: String -> Contract
 
 *Helper functions:*
 
-Produces a LaTeX version of the formula:
+Produce a LaTeX version of the formula:
 ```
 toLaTeX :: Contract -> String
 ```
+The folder `latex` contains a minimal LaTeX source with the definitions to allow for typesetting the tool output. 
 
 Check a contract for conflicts:
 ```
@@ -76,10 +77,35 @@ showConflicts :: Contract -> String
 toLaTeXShortestConflicts :: Contract -> String
 toLaTeXAllConflicts :: Contract -> String
 ```
-Visualisation of the automaton produced by full-transitions (see paper)  and conflicts
+Visualisation of the automaton produced by full-transitions (see paper)  and conflicts:
 ```
 constructAutomaton :: Contract -> ContractAutomaton
 conflictsToDot :: ContractAutomaton -> String
 ```
-(The latter produces a dot file which can be visualised using graphviz or similar tool)
+The latter produces a dot file which can be visualised using graphviz or similar tool.
 
+## Example ISP end-user agreement
+```
+isp = party "ISP"
+user = party "user"
+
+pay = action "pay"
+disconnect = action "disconnect"
+lost_connection = action "lost connection"
+compensate = action "compensate"
+
+-- The user is obliged to pay within 60 time units, but if not
+-- the ISP is allowed to disconnect them within 20 time units.
+paymentClause = oo user pay 60 |> pp isp disconnect 20
+
+-- If the user gets a lost connection within 10 time units, the 
+-- the ISP is obliged to compensate them within 60 time units and
+-- continue with the agreement. If no connection is lost, the 
+-- payment clause kicks in.
+contract = 
+  rec "x" $ 
+    cond user lost_connection 60 (
+      oo isp compensate 60 >-> var "x", 
+      paymentClause
+    )
+```
